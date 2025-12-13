@@ -8,7 +8,6 @@ Key features:
 - Serial correlation testing with ACF and batch means.
 - Metamodelling using Weighted Least Squares (WLS) regression with main effects and two-way interactions.
 - Variance reduction via Common Random Numbers (CRN).
-- No personal twist implemented; baseline variants only.
 
 The code is modular, with separate files for models, monitoring, utilities, simulation, analysis, and a main entry point.
 
@@ -29,12 +28,7 @@ pip install simpy numpy pandas statsmodels
 ## Project Structure
 ```
 hospital_simulation/
-├── models.py          # Core classes: stream, clinic, patient
-├── monitor.py         # Monitoring and sampling class
-├── utils.py           # Setup function for patient arrivals
-├── simulation.py      # Core simulation function with CRN
-├── analysis.py        # Serial correlation and metamodeling functions
-├── main.py            # Entry point to run analysis
+├── main.py            
 └── README.md          # This file
 ```
 
@@ -56,10 +50,13 @@ hospital_simulation/
 - **Serial Correlation**: Tested on high-load config; batching reduces dependence.
 - **Experiment Design**: Full factorial for comprehensive analysis.
 - **Metamodel**: WLS regression; accounts for CRN covariances with regularization for stability.
+- **Twist**: In patient/setup.
+- **Plots**: ACF visuals. 
+- **Pruning**: In metamodel. 
 
 ## Sample Output Interpretation
-- ACF shows strong correlation reduced by batching.
-- Metamodel: Significant factors (e.g., inter_mean, rec_units) align with queuing theory; small errors indicate good fit.
+- ACF: Raw lag-1 0.96 (twist effect); batch 0.69.
+- Metamodel: Twist +9.77 (increases queues); sig high; errors -7 to 0.5.
 
 ## Limitations
 - Computational: 640 runs may take time (~10-20 min on standard hardware).
